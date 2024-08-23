@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대한민국 지도에 랜덤 점 찍기</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #map {
+            width: 900px;
+            height: 1100px;
+            background: url('한국지도.png') no-repeat center center;
+            background-size: contain; /* 이미지가 잘리지 않도록 조정 */
+            position: relative;
+            margin: 0 auto; /* 중앙 정렬 */
+            border: 1px solid #ddd; /* 지도 경계선 */
+            border-radius: 8px; /* 경계선 둥글게 */
+            overflow: hidden; /* 경계선 내에 있는 점들만 보이게 함 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+        }
+        .point {
+            width: 12px;
+            height: 12px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>랜덤 여행</h1>
+        <div id="map"></div>
+        <button onclick="placeRandomPoint()">ㄱㄱ</button>
+    </div>
+
+    <script>
+        function placeRandomPoint() {
+            const map = document.getElementById('map');
+            const mapWidth = map.offsetWidth;
+            const mapHeight = map.offsetHeight;
+            
+            // 대한민국 지도에 대한 대략적인 좌표 범위
+            const minX = 50; // 지도 좌측 여백
+            const maxX = mapWidth - 50; // 지도 우측 여백
+            const minY = 50; // 지도 상단 여백
+            const maxY = mapHeight - 50; // 지도 하단 여백
+            
+            // 랜덤 좌표 생성
+            const randomX = Math.random() * (maxX - minX) + minX;
+            const randomY = Math.random() * (maxY - minY) + minY;
+            
+            // 기존 점 제거
+            const existingPoints = document.querySelectorAll('.point');
+            existingPoints.forEach(point => point.remove());
+            
+            // 새로운 점 생성
+            const point = document.createElement('div');
+            point.className = 'point';
+            point.style.left = `${randomX}px`;
+            point.style.top = `${randomY}px`;
+            map.appendChild(point);
+        }
+    </script>
+</body>
+</html>
